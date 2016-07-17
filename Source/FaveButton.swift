@@ -38,7 +38,7 @@ public class FaveButton: UIButton {
     
     private struct Const{
         static let duration             = 1.0
-        static let expandDuration       = 0.1298 
+        static let expandDuration       = 0.1298
         static let collapseDuration     = 0.1089
         static let faveIconShowDelay    = Const.expandDuration + Const.collapseDuration/2.0
         static let dotRadiusFactors     = (first: 0.0633, second: 0.04)
@@ -56,11 +56,18 @@ public class FaveButton: UIButton {
     private(set) var sparkGroupCount: Int = 7
     
     private var faveIconImage:UIImage?
+    private var selectedImage: UIImage?
     private var faveIcon: FaveIcon!
     
+//    override public var selected: Bool {
+//        didSet{
+////            animateSelect(self.selected, duration: Const.duration)
+//        }
+//    }
     
-    override public var selected: Bool{
-        didSet{
+    public var selectedAnimated: Bool = false {
+        didSet {
+            self.selected = true
             animateSelect(self.selected, duration: Const.duration)
         }
     }
@@ -96,6 +103,10 @@ extension FaveButton{
             faveIconImage = imageForState(.Normal)
         }
         
+        if self.selectedImage == nil {
+            self.selectedImage = imageForState(.Selected)
+        }
+        
         guard let faveIconImage = faveIconImage else{
             fatalError("please provide an image for normal state.")
         }
@@ -105,14 +116,14 @@ extension FaveButton{
         setTitle(nil, forState: .Normal)
         setTitle(nil, forState: .Selected)
         
-        faveIcon  = createFaveIcon(faveIconImage)
+        faveIcon  = createFaveIcon(faveIconImage, selectedImage: selectedImage)
         
         addActions()
     }
     
     
-    private func createFaveIcon(faveIconImage: UIImage) -> FaveIcon{
-        return FaveIcon.createFaveIcon(self, icon: faveIconImage,color: normalColor)
+    private func createFaveIcon(faveIconImage: UIImage, selectedImage: UIImage? = nil) -> FaveIcon{
+        return FaveIcon.createFaveIcon(self, icon: faveIconImage,color: normalColor, selectedImage: selectedImage)
     }
     
     
@@ -158,7 +169,7 @@ extension FaveButton{
     }
     
     func toggle(sender: FaveButton){
-        sender.selected = !sender.selected
+        sender.selectedAnimated = !sender.selected
         
         guard case let delegate as FaveButtonDelegate = self.delegate else{
             return
@@ -189,7 +200,7 @@ extension FaveButton{
             
             ring.animateToRadius(radius, toColor: circleToColor, duration: Const.expandDuration, delay: 0)
             ring.animateColapse(radius, duration: Const.collapseDuration, delay: Const.expandDuration)
-
+            
             sparks.forEach{
                 $0.animateIgniteShow(igniteToRadius, duration:0.4, delay: Const.collapseDuration/3.0)
                 $0.animateIgniteHide(0.7, delay: 0.2)

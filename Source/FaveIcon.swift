@@ -28,15 +28,17 @@ public class FaveIcon: UIView {
     
     var iconColor: UIColor = .grayColor()
     var iconImage: UIImage!
+    var selectedImage: UIImage?
     var iconLayer: CAShapeLayer!
     var iconMask:  CALayer!
     var contentRegion: CGRect!
     var tweenValues: [CGFloat]?
     
-    public init(region: CGRect, icon: UIImage, color: UIColor) {
+    public init(region: CGRect, icon: UIImage, color: UIColor, selectedImage: UIImage? = nil) {
         self.iconColor      = color
         self.iconImage      = icon
         self.contentRegion  = region
+        self.selectedImage = selectedImage
         super.init(frame: CGRectZero)
         
         applyInit()
@@ -51,8 +53,8 @@ public class FaveIcon: UIView {
 // MARK: create
 extension FaveIcon{
     
-    class func createFaveIcon(onView: UIView, icon: UIImage, color: UIColor) -> FaveIcon{
-        let faveIcon = Init(FaveIcon(region:onView.bounds, icon: icon, color: color)){
+    class func createFaveIcon(onView: UIView, icon: UIImage, color: UIColor, selectedImage: UIImage? = nil) -> FaveIcon{
+        let faveIcon = Init(FaveIcon(region:onView.bounds, icon: icon, color: color, selectedImage: selectedImage)){
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor                           = .clearColor()
         }
@@ -97,8 +99,14 @@ extension FaveIcon{
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-            iconLayer.fillColor = fillColor.CGColor
+        iconLayer.fillColor = fillColor.CGColor
         CATransaction.commit()
+        
+        if self.selectedImage != nil {
+            
+            iconMask.contents = isSelected ? self.selectedImage!.CGImage : self.iconImage?.CGImage
+            
+        }
         
         let selectedDelay = isSelected ? delay : 0
         
