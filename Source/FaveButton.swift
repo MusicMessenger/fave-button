@@ -65,14 +65,14 @@ public class FaveButton: UIButton {
         }
     }
     
-    init(frame: CGRect, faveIconNormal: UIImage?) {
+    init(frame: CGRect, faveIconNormal: UIImage?, faveIcon: FaveIcon? = nil) {
         super.init(frame: frame)
         
         guard let icon = faveIconNormal else{
             fatalError("missing image for normal state")
         }
         faveIconImage = icon
-        
+        self.faveIcon = faveIcon
         applyInit()
     }
     
@@ -197,22 +197,3 @@ extension FaveButton{
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
