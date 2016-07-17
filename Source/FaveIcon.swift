@@ -24,7 +24,7 @@
 
 import UIKit
 
-class FaveIcon: UIView {
+public class FaveIcon: UIView {
     
     var iconColor: UIColor = .grayColor()
     var iconImage: UIImage!
@@ -33,7 +33,7 @@ class FaveIcon: UIView {
     var contentRegion: CGRect!
     var tweenValues: [CGFloat]?
     
-    init(region: CGRect, icon: UIImage, color: UIColor) {
+    public init(region: CGRect, icon: UIImage, color: UIColor) {
         self.iconColor      = color
         self.iconImage      = icon
         self.contentRegion  = region
@@ -42,7 +42,7 @@ class FaveIcon: UIView {
         applyInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
