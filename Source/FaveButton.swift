@@ -72,7 +72,7 @@ public class FaveButton: UIButton {
         }
     }
     
-    init(frame: CGRect, faveIconNormal: UIImage?, faveIcon: FaveIcon? = nil) {
+    public init(frame: CGRect, faveIconNormal: UIImage?, faveIcon: FaveIcon? = nil) {
         super.init(frame: frame)
         
         guard let icon = faveIconNormal else{
