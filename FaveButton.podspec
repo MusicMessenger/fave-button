@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "FaveButton"
-  s.version      = "1.2.6"
+  s.version      = "1.2.7"
   s.summary      = "Twitter's heart like animated button written in Swift"
   s.license      = 'MIT'
   s.homepage     = 'https://github.com/xhamr/fave-button'
