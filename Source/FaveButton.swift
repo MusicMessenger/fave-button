@@ -72,13 +72,14 @@ public class FaveButton: UIButton {
         }
     }
     
-    public init(frame: CGRect, faveIconNormal: UIImage?, faveIcon: FaveIcon? = nil) {
+    public init(frame: CGRect, faveIconNormal: UIImage?, selectedImage: UIImage? = nil) {
         super.init(frame: frame)
         
         guard let icon = faveIconNormal else{
             fatalError("missing image for normal state")
         }
         faveIconImage = icon
+        selectedImage = selectedImage
         self.faveIcon = faveIcon
         applyInit()
     }
